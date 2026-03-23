@@ -1,0 +1,120 @@
+:root {
+  --bg: #0f172a;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.1);
+  --text: #e2e8f0;
+  --text-h: #ffffff;
+  --accent: #6366f1;
+  --accent2: #22c55e;
+
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  font-family: var(--sans);
+  color: var(--text);
+  background: linear-gradient(135deg, #0f172a, #1e293b, #020617);
+}
+
+/* 🌍 BODY */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e293b, #020617);
+}
+
+/* 📦 ROOT CONTAINER */
+#root {
+  width: 1200px;
+  max-width: 100%;
+  margin: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* 🔥 HEADINGS */
+h1 {
+  font-size: 40px;
+  color: var(--text-h);
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  color: var(--text-h);
+  margin-bottom: 10px;
+}
+
+/* 💎 GLASS CARD */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* 🔘 BUTTON */
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+/* ⭐ ADD BUTTON */
+.btn-add {
+  background: linear-gradient(135deg, #facc15, #eab308);
+  color: black;
+  padding: 6px 12px;
+  border-radius: 10px;
+}
+
+.btn-add:hover {
+  transform: scale(1.05);
+}
+
+/* ❌ REMOVE BUTTON */
+.btn-remove {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 10px;
+}
+
+.btn-remove:hover {
+  transform: scale(1.05);
+}
+
+/* 📊 GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* 🔥 NAVBAR */
+.navbar {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 16px;
+  border-radius: 0 0 20px 20px;
+}
+
+/* ✨ TEXT COLORS */
+.green {
+  color: #22c55e;
+}
+
+.red {
+  color: #ef4444;
+}
