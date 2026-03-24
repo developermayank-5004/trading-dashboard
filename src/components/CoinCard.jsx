@@ -42,19 +42,15 @@ const CoinCard = ({ coin }) => {
   return (
     <motion.div
       onClick={() => navigate(`/coin/${coin.id}`)}
-      
-      // 🔥 ENTRY ANIMATION
+
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
 
-      // 🔥 HOVER EFFECT
-      whileHover={{ scale: 1.07 }}
+      whileHover={{ scale: 1.08 }}
+      whileTap={{ scale: 0.96 }}
 
-      // 🔥 CLICK EFFECT
-      whileTap={{ scale: 0.97 }}
-
-      className="bg-white/10 backdrop-blur-lg border border-white/20 p-5 rounded-2xl text-white shadow-lg cursor-pointer"
+      className="bg-white/10 backdrop-blur-xl border border-white/20 p-5 rounded-2xl text-white shadow-lg cursor-pointer hover:shadow-2xl transition"
     >
       {/* IMAGE */}
       <motion.img
@@ -81,8 +77,8 @@ const CoinCard = ({ coin }) => {
       <p
         className={`text-sm font-medium ${
           coin?.price_change_percentage_24h > 0
-            ? "text-green-400"
-            : "text-red-400"
+            ? "text-green-400 drop-shadow-[0_0_6px_#4ade80]"
+            : "text-red-400 drop-shadow-[0_0_6px_red]"
         }`}
       >
         {coin?.price_change_percentage_24h

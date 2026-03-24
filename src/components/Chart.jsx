@@ -1,4 +1,3 @@
-import React from "react";
 import {
   LineChart,
   Line,
@@ -6,19 +5,32 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  CartesianGrid,
 } from "recharts";
 
 const Chart = ({ data }) => {
   return (
-    <div className="bg-gray-800 p-4 rounded-xl">
-      <h2 className="text-white mb-4">Price Chart</h2>
+    <div className="bg-gray-800 p-4 rounded-xl mb-6">
+      <h3 className="text-white mb-3">📊 Price Chart</h3>
 
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
-          <XAxis dataKey="time" stroke="#ccc" />
-          <YAxis stroke="#ccc" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+
+          <XAxis dataKey="date" stroke="#aaa" />
+
+          <YAxis stroke="#aaa" />
+
           <Tooltip />
-          <Line type="monotone" dataKey="price" stroke="#00ffcc" />
+
+          <Line
+            type="monotone"
+            dataKey="price"
+            stroke="#4ade80"
+            strokeWidth={2}
+            dot={false}
+            isAnimationActive={true}
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>

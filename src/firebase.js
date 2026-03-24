@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth"; // 👈 ADD THIS
 
-  const firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyB8YvWCRymzYGPamvnb1MwvfzQKuGJGLpw",
   authDomain: "trading-dashboard-10f3e.firebaseapp.com",
   projectId: "trading-dashboard-10f3e",
@@ -12,4 +13,5 @@ import { getAuth } from "firebase/auth";
 
 const app = initializeApp(firebaseConfig);
 
-export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const auth = getAuth(app); // 👈 ADD THIS

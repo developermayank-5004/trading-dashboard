@@ -3,61 +3,87 @@ import { getCoins, getChartData } from "../services/api";
 import useFetch from "../hooks/useFetch";
 import CoinCard from "../components/CoinCard";
 import Chart from "../components/Chart";
+import { motion } from "framer-motion";
 
 const Home = () => {
-  const { data: coins, loading, error } = useFetch(getCoins);
+  const { data: coins = [], loading, error } = useFetch(getCoins);
 
   const [chartData, setChartData] = useState([]);
-  const [search, setSearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [selectedCoin, setSelectedCoin] = useState("bitcoin");
+  const [intervalTime, setIntervalTime] = useState(5000);
 
-  // 📊 Chart Data
+  // 📊 FETCH CHART
+  const fetchChart = async () => {
+    const data = await getChartData(selectedCoin);
+    setChartData(data);
+  };
+
+  // 🔥 INITIAL LOAD
   useEffect(() => {
     if (coins.length > 0) {
-      getChartData(coins[0].id).then(setChartData);
+      fetchChart();
     }
-  }, [coins]);
+  }, [coins, selectedCoin]);
 
-  // ⚡ Debounce Logic (FAANG level)
+  // 🚀 LIVE UPDATE
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearch(search);
-    }, 500);
+    const interval = setInterval(() => {
+      fetchChart();
+    }, intervalTime);
 
-    return () => clearTimeout(timer);
-  }, [search]);
-
-  // 🔍 Filtered Coins
-  const filteredCoins = coins.filter((coin) =>
-    coin.name.toLowerCase().includes(debouncedSearch.toLowerCase())
-  );
+    return () => clearInterval(interval);
+  }, [selectedCoin, intervalTime]);
 
   if (loading) return <p className="text-white p-6">Loading...</p>;
   if (error) return <p className="text-red-500 p-6">{error}</p>;
 
   return (
-    <div className="p-6 bg-gray-900 min-h-screen">
-      <h2 className="text-white text-2xl mb-6">Dashboard</h2>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="p-6 min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900"
+    >
+      <h2 className="text-white text-3xl font-bold mb-6">
+        🚀 Trading Dashboard
+      </h2>
 
-      {/* 📊 Chart */}
-      <Chart data={chartData} />
+      {/* 🔥 CONTROL PANEL */}
+      <div className="mb-6 backdrop-blur-lg bg-white/10 border border-white/20 p-4 rounded-2xl shadow-lg flex items-center gap-4">
+        <label className="text-white">Update Speed:</label>
 
-      {/* 🔍 Search Input */}
-      <input
-        type="text"
-        placeholder="Search coin..."
-        className="p-2 mb-6 w-full rounded bg-gray-800 text-white outline-none"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+        <select
+          value={intervalTime}
+          onChange={(e) => setIntervalTime(Number(e.target.value))}
+          className="bg-black/40 text-white p-2 rounded-lg outline-none"
+        >
+          <option value={2000}>⚡ Fast</option>
+          <option value={5000}>⏱ Normal</option>
+          <option value={10000}>🐢 Slow</option>
+        </select>
+      </div>
 
-      {/* 🪙 Coins Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {filteredCoins.map((coin) => (
-          <CoinCard key={coin.id} coin={coin} />
+      {/* 📊 CHART */}
+      <div className="backdrop-blur-xl bg-white/10 border border-white/20 p-5 rounded-2xl shadow-lg mb-6">
+        <Chart data={chartData} />
+      </div>
+
+      {/* 🪙 COINS */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {coins.map((coin) => (
+          <div
+            key={coin.id}
+            onClick={() => setSelectedCoin(coin.id)}
+            className={`cursor-pointer transition ${
+              selectedCoin === coin.id
+                ? "scale-105 border border-green-400 rounded-xl"
+                : ""
+            }`}
+          >
+            <CoinCard coin={coin} />
+          </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
